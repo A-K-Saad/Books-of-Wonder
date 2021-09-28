@@ -1,38 +1,170 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Mitr:wght@500&family=Pacifico&display=swap");
+img {
+  width: 100%;
+}
+body {
+  background: #b8daf8;
+}
+.text-justify {
+  text-align: justify;
+}
+.navbar-brand img {
+  width: 8rem;
+}
+.navbar-brand {
+  font-family: "Pacifico", cursive;
+  color: #3a5180 !important;
+}
+.title-first {
+  border-bottom: 3px solid;
+}
+.nav-link {
+  color: #000 !important;
+  border: none;
+  background: transparent;
+}
+.navbar-light {
+  background: #73bfff;
+}
+.input-filed {
+  width: calc(100% - 3rem);
+  padding: 9px 12px;
+  outline: none;
+  border: none;
+  border-radius: 3px 0 0 3px;
+}
+.search-btn {
+  font-size: 20px;
+  background: #4d6a94;
+  color: #fff;
+  border: none;
+  border-radius: 0 3px 3px 0;
+  width: 3rem;
+}
+.badge {
+  padding: 3px 6px !important;
+}
+.book-cover {
+  width: 100%;
+  height: 14rem;
+}
+.single-book {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in;
+}
+.single-book:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0px 0px 74px 10px #4994ff inset;
+}
+.cart-btn {
+  position: absolute;
+  width: 11rem;
+  border: none;
+  top: 0;
+  bottom: 0;
+  left: -11rem;
+  margin: auto;
+  height: 3rem;
+  transition: all 0.2s ease;
+  background: #65a3ff;
+  color: #fff;
+  font-size: 1.5rem;
+}
+.cart-btn:hover {
+  background: #1f97ff;
+}
+.single-book:hover .cart-btn {
+  left: 0;
+  right: 0;
+}
+.fa-shopping-cart {
+  font-size: 28px;
+}
+.info-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  padding: 10px 17px;
+  font-size: 21px;
+  color: #fff;
+  background: #65a3ff;
+}
+.info-btn:hover {
+  background: #1893ff;
+}
+.book-title {
+  color: #0057a3;
+}
+.loading {
+  color: #174975;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto !important;
+  height: 3rem;
+}
+.details-container {
+  background: #fff;
+}
+.book-cover,
+.details-cover {
+  position: relative;
+  background: url(https://storage.googleapis.com/multi-static-content/previews/artage-io-thumb-81b83738df4173fb34fa38b27dc44f45.png),
+    linear-gradient(#fff, #fff);
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.details-cover {
+  width: 100%;
+  height: 26rem;
+}
+.book-name {
+  font-family: "Mitr", sans-serif;
+  color: #123f66;
+}
+.author-name {
+  font-family: "Kalam", cursive;
+  color: #123f66;
+}
+.book-price {
+  position: absolute;
+  color: #fff;
+  transform: rotate(317deg);
+  right: 5rem;
+  bottom: 14.1rem;
+  background: #2258d2;
+  width: 8rem;
+}
+.cart-img {
+  width: 3rem;
+  height: 4rem;
+}
+.quantity-input {
+  width: 3rem;
   text-align: center;
+  border: 1px solid #ddd;
+}
+.btn-gray {
+  background: #e1ddff;
+  padding: 2px 8px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media only screen and (max-width: 688px) {
+  .btn-cart {
+    position: absolute;
+    top: 20px;
+    right: 20px;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  .input-group {
+    position: absolute;
+    top: 7rem;
   }
 }
