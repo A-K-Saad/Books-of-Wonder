@@ -12,6 +12,7 @@ const Display = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [bookDetails, setBookDetails] = useState([]);
   const [existQuantity, setExistQuantity] = useState(0);
+  const [allDatas, setAllDatas] = useState([]);
 
   // FetchData
   const fetchData = async (search) => {
@@ -36,12 +37,14 @@ const Display = () => {
     event.preventDefault();
     fetchData(search);
     showDetails && window.scrollTo(0, 600);
+    setShowDetails(false);
   };
 
   // updating total
 
   const updateTotal = (book, increasing) => {
     getDatas(book, increasing);
+    setAllDatas(storedData);
   };
 
   const emptyData = [];
@@ -59,13 +62,12 @@ const Display = () => {
     (previousValue, currentValue) => previousValue + currentValue,
     0
   );
-  console.log(count);
 
   const showDetailFunction = (book) => {
     setLoading(true);
     setShowDetails(true);
     setBookDetails(book);
-    window.scrollTo(0, 100);
+    window.scrollTo(0, 10);
     setLoading(false);
   };
   const getDatas = (book, increasing) => {
@@ -94,6 +96,15 @@ const Display = () => {
   if (loading) {
     return <h1 className="text-center m-3 loading">Loading..</h1>;
   }
+
+  const deleteItem = (key) => {
+    const deleteing = storedData.indexOf(
+      storedData.find((el) => el.key === key)
+    );
+    storedData.splice(deleteing, 1);
+    localStorage.setItem("data", JSON.stringify(storedData));
+    setAllDatas(storedData);
+  };
 
   return (
     <>
@@ -141,7 +152,9 @@ const Display = () => {
           </div>
         </nav>
       </header>
-      <Cart updateTotal={updateTotal} />
+
+      <Cart updateTotal={updateTotal} deleteItem={deleteItem} data={allDatas} />
+
       <main className="container">
         {/* <h3 className="text-center mt-4">
           {`Showing:
@@ -157,15 +170,15 @@ const Display = () => {
 
         {showDetails && <BookDetails {...bookDetails} />}
 
-        <div className="row">
+        <div className="row mt-5 mt-md-0">
           {getBooks
             .filter((book) => book.title && book.author_name && book.cover_i)
             .map((book) => (
               <div
-                className="col-12 col-md-2 p-2 mx-auto position-relative"
+                className="col-12 col-md-3 col-lg-2 p-4 p-md-2 mx-auto position-relative"
                 key={book.key}
               >
-                <div className="p-4 p-md-2 single-book">
+                <div className="p-4 p-md-2 single-book shadow bg-light">
                   <img
                     src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
                     alt={book.cover_i}
