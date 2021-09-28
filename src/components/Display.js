@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import logo from "../images/logo.png";
 import BookDetails from "./BookDetails";
 import Cart from "./Cart";
-// import Book from "./Book";
+import SingleBook from "./SingleBook";
+import Header from "./Header";
 
 const Display = () => {
   const [search, setSearch] = useState("");
@@ -17,7 +17,7 @@ const Display = () => {
   // FetchData
   const fetchData = async (search) => {
     const response = await fetch(
-      `https://openlibrary.org/search.json?q=${search}&limit=20`
+      `https://openlibrary.org/search.json?q=${search}&limit=35`
     );
     const data = await response.json();
     setgetBooks(data.docs);
@@ -26,6 +26,7 @@ const Display = () => {
   };
 
   useEffect(() => {
+    setShowDetails(false);
     const topics = ["science", "programming", "harry_potter"];
     let randomTopic = topics[Math.floor(Math.random() * topics.length)];
     fetchData(randomTopic);
@@ -108,50 +109,12 @@ const Display = () => {
 
   return (
     <>
-      <header className="sticky-top">
-        <nav className="navbar navbar-expand-lg navbar-light p-0">
-          <div className="container p-0">
-            <a className="navbar-brand d-flex" href="/">
-              <img src={logo} alt="" />
-              <div className="nav-titles d-flex flex-column ps-2">
-                <h3 className="title-first m-0">Books of</h3>
-                <h3 className="m-0">Wonder</h3>
-              </div>
-            </a>
-
-            <form
-              className="input-group pb-4 pb-md-0 px-3 px-md-5"
-              onSubmit={(event) => handleSubmit(event)}
-            >
-              <input
-                type="text"
-                className="input-filed"
-                value={search}
-                placeholder="Search by book and author name"
-                onChange={(event) => setSearch(event.target.value)}
-              />
-              <button className="search-btn">
-                <i className="fas fa-search"></i>
-              </button>
-            </form>
-            <button
-              className="btn-cart nav-link p-0 position-relative top-0"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight"
-            >
-              <i className="fas fa-shopping-cart m-0 text-light"></i>
-              <span
-                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                id="counter"
-              >
-                {count}
-                <span className="visually-hidden">unread messages</span>
-              </span>
-            </button>
-          </div>
-        </nav>
-      </header>
+      <Header
+        handleSubmit={handleSubmit}
+        search={search}
+        setSearch={setSearch}
+        count={count}
+      />
 
       <Cart updateTotal={updateTotal} deleteItem={deleteItem} data={allDatas} />
 
@@ -171,45 +134,11 @@ const Display = () => {
         {showDetails && <BookDetails {...bookDetails} />}
 
         <div className="row mt-5 mt-md-0">
-          {getBooks
-            .filter((book) => book.title && book.author_name && book.cover_i)
-            .map((book) => (
-              <div
-                className="col-12 col-md-3 col-lg-2 p-4 p-md-2 mx-auto position-relative"
-                key={book.key}
-              >
-                <div className="p-4 p-md-2 single-book shadow bg-light">
-                  <img
-                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                    alt={book.cover_i}
-                    className="book-cover"
-                  />
-                  <h5 className="book-title pt-2 text-center">
-                    {book.title.length > 13
-                      ? book.title.slice(0, 12) + `...`
-                      : book.title}
-                  </h5>
-                  <h3 className="text-center book-price">
-                    $
-                    {book.title.length > 20
-                      ? book.title.slice(19).length * 5
-                      : book.title.length * 6}
-                  </h3>
-                  <button
-                    className="info-btn"
-                    onClick={() => showDetailFunction(book)}
-                  >
-                    <i className="fas fa-list"></i>
-                  </button>
-                  <button
-                    className="cart-btn top-0"
-                    onClick={() => updateTotal(book, true)}
-                  >
-                    <i className="fas fa-cart-plus"></i>
-                  </button>
-                </div>
-              </div>
-            ))}
+          <SingleBook
+            books={getBooks}
+            showDetailFunction={showDetailFunction}
+            updateTotal={updateTotal}
+          />
         </div>
         {/* {loading ? <h1 className="text-center m-3 loading">Loading..</h1> : ""} */}
       </main>
